@@ -1,0 +1,9 @@
+{
+  "name": "learning-vault",
+  "version": "1.0.0",
+  "description": "Capture technical learnings to Obsidian vault using Zettelkasten method. Integrates with Obsidian MCP server to create atomic, linked knowledge notes from development work.",
+  "author": {
+    "name": "Rocky"
+  },
+  "keywords": ["obsidian", "learning", "zettelkasten", "knowledge-management", "notes"]
+}

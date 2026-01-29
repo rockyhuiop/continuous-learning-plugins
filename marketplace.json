@@ -1,0 +1,32 @@
+{
+  "$schema": "https://claude.ai/schemas/marketplace.json",
+  "name": "rocky-plugins",
+  "displayName": "Rocky's Plugins",
+  "description": "Personal collection of Claude Code plugins for knowledge management and development workflows",
+  "author": {
+    "name": "Rocky",
+    "email": "rockyhuiop@gmail.com",
+    "url": "https://github.com/rockyhuiop"
+  },
+  "homepage": "https://github.com/rockyhuiop/rocky-plugins",
+  "plugins": [
+    {
+      "name": "learning-vault",
+      "version": "1.0.0",
+      "description": "Capture technical learnings to Obsidian vault using Zettelkasten method. Integrates with Obsidian MCP server to create atomic, linked knowledge notes from development work.",
+      "path": "./learning-vault",
+      "category": "productivity",
+      "keywords": [
+        "obsidian",
+        "learning",
+        "zettelkasten",
+        "knowledge-management",
+        "notes",
+        "documentation"
+      ],
+      "requirements": {
+        "mcpServers": ["obsidian"]
+      }
+    }
+  ]
+}
