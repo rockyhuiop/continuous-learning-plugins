@@ -1,5 +1,4 @@
 ---
-id: 202601281430
 title: Strangler Fig Pattern
 created: 2026-01-28
 project: canpanion-backend

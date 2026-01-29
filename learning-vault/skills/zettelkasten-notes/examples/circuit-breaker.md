@@ -1,5 +1,4 @@
 ---
-id: 202601271015
 title: Circuit Breaker Pattern
 created: 2026-01-27
 project: canpanion-backend

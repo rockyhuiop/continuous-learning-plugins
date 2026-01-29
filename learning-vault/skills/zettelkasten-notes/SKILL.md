@@ -43,7 +43,6 @@ Capture YOUR understanding, not textbook definitions:
 
 ```yaml
 ---
-id: 202601281430
 title: Strangler Fig Pattern
 created: 2026-01-28
 project: canpanion-backend
@@ -56,12 +55,13 @@ tags:
 ```
 
 **Fields**:
-- `id`: Timestamp YYYYMMDDHHMM (enables sorting, uniqueness)
-- `title`: Human-readable concept name
+- `title`: Human-readable concept name (also used as filename)
 - `created`: ISO date
 - `project`: Where you learned/applied this
 - `source`: How you learned it (implementation, reading, discussion, course)
 - `tags`: From the taxonomy (see below)
+
+**Filename**: Use the exact title with spaces, e.g., `Strangler Fig Pattern.md`
 
 ### Definition Section
 
@@ -206,7 +206,7 @@ See the `examples/` directory for complete note templates:
 ## Quick Reference
 
 **Creating a new note**:
-1. Generate ID: current timestamp YYYYMMDDHHMM
+1. Use title as filename: `Knowledge/Concept Name.md`
 2. Write one-sentence definition
 3. Add your context and example
 4. Link to 2-5 related concepts
