@@ -1,0 +1,9 @@
+{
+  "name": "anki-flashcards",
+  "version": "1.0.0",
+  "description": "Create Anki flashcards from conversation context for continuous learning with spaced repetition",
+  "author": {
+    "name": "roc_op"
+  },
+  "keywords": ["anki", "flashcards", "learning", "spaced-repetition", "memory"]
+}

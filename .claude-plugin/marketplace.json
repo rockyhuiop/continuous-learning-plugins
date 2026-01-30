@@ -25,6 +25,25 @@
         "notes",
         "documentation"
       ]
+    },
+    {
+      "name": "anki-flashcards",
+      "version": "1.0.0",
+      "description": "Create Anki flashcards from conversation context for continuous learning with spaced repetition. Includes /flashcard command, quality review agent, and best practices skill.",
+      "author": {
+        "name": "Rocky Hui",
+        "email": "rockyhui.operation@gmail.com"
+      },
+      "source": "./anki-flashcards",
+      "category": "productivity",
+      "keywords": [
+        "anki",
+        "flashcards",
+        "learning",
+        "spaced-repetition",
+        "memory",
+        "study"
+      ]
     }
   ]
 }
