@@ -1,13 +1,16 @@
 {
-  "SessionStart": [
-    {
-      "matcher": ".*",
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "Check if the file .claude/sraa-audit/audit-state.md exists in the current project. If it exists, read it and provide a brief one-line summary noting that an SRAA audit is in progress (e.g., 'SRAA audit in progress: 2/4 domains complete, 8 findings'). Mention that the user can run /sraa:status for details. If the file does not exist, do nothing and do not mention anything about SRAA audits."
-        }
-      ]
-    }
-  ]
+  "description": "SRAA audit state detection on session start",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check if the file .claude/sraa-audit/audit-state.md exists in the current project. If it exists, read it and provide a brief one-line summary noting that an SRAA audit is in progress (e.g., 'SRAA audit in progress: 2/4 domains complete, 8 findings'). Mention that the user can run /sraa:status for details. If the file does not exist, do nothing and do not mention anything about SRAA audits."
+          }
+        ]
+      }
+    ]
+  }
 }
