@@ -44,6 +44,29 @@
         "memory",
         "study"
       ]
+    },
+    {
+      "name": "sraa-compliance",
+      "version": "1.0.0",
+      "description": "SRAA (Security Risk Assessment and Audit) compliance auditing for Hong Kong government/NGO security standards. Features specialized sub-agents with persistent context memory for comprehensive security assessments based on S17, G3, and ISPG-SM01 frameworks.",
+      "author": {
+        "name": "Rocky Hui",
+        "email": "rockyhui.operation@gmail.com"
+      },
+      "source": "./sraa-compliance",
+      "category": "security",
+      "keywords": [
+        "sraa",
+        "security-audit",
+        "hong-kong",
+        "compliance",
+        "s17",
+        "g3",
+        "owasp",
+        "security-assessment",
+        "government",
+        "ngo"
+      ]
     }
   ]
 }
