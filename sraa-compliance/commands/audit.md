@@ -1,5 +1,4 @@
 ---
-name: audit
 description: Start or resume an SRAA (Security Risk Assessment and Audit) compliance audit for the current codebase
 argument-hint: "[--fresh] [--domain <name>]"
 allowed-tools: ["Read", "Write", "Grep", "Glob", "Bash", "Task"]

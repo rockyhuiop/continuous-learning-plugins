@@ -1,5 +1,4 @@
 ---
-name: report
 description: Generate an SRAA compliance audit report from collected findings
 argument-hint: "[--format <md|html>] [--domain <name>]"
 allowed-tools: ["Read", "Write", "Glob", "Grep"]

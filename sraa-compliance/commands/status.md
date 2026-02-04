@@ -1,5 +1,4 @@
 ---
-name: status
 description: Check current SRAA compliance audit progress and statistics
 allowed-tools: ["Read", "Glob"]
 ---
