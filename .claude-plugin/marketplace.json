@@ -67,6 +67,27 @@
         "government",
         "ngo"
       ]
+    },
+    {
+      "name": "production-audit",
+      "version": "1.0.0",
+      "description": "Production-grade software engineering audit plugin. Final gatekeeper before shipping to production — covers code quality, architecture, testing, performance, reliability, operations readiness, and feature-specific best practices via HyDE-powered research. Complements sraa-compliance for non-security engineering concerns.",
+      "author": {
+        "name": "Rocky Hui",
+        "email": "rockyhui.operation@gmail.com"
+      },
+      "source": "./production-audit",
+      "category": "code-quality",
+      "keywords": [
+        "production-readiness",
+        "code-quality",
+        "architecture-audit",
+        "testing-audit",
+        "performance-audit",
+        "engineering-best-practices",
+        "pre-production",
+        "gatekeeper"
+      ]
     }
   ]
 }
