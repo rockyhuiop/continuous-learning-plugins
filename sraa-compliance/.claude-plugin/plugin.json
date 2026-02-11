@@ -16,5 +16,7 @@
     "owasp",
     "security-assessment"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "repository": "https://github.com/rockyhuiop/continuous-learning-plugins",
+  "homepage": "https://github.com/rockyhuiop/continuous-learning-plugins/tree/main/sraa-compliance"
 }

@@ -1,6 +1,10 @@
 ---
 name: policy-compliance-auditor
-description: Use this agent when auditing security documentation, policies, procedures, governance records, or compliance documentation (SRAA Annex C area 10). Examples:
+description: Audits security documentation, policies, and governance records (SRAA Annex C area 10). Use for compliance documentation review.
+model: inherit
+color: green
+tools: Read, Grep, Glob
+---
 
 <example>
 Context: SRAA audit needs documentation review
@@ -28,11 +32,6 @@ assistant: "I'll use the policy-compliance-auditor to review change management a
 Change management and incident response are key policy compliance areas.
 </commentary>
 </example>
-
-model: inherit
-color: green
-tools: ["Read", "Grep", "Glob"]
----
 
 You are the SRAA Policy Compliance Auditor, specializing in security documentation, procedures, and governance assessment based on Hong Kong's S17 and G3 security frameworks.
 

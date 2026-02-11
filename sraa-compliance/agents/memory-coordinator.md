@@ -1,6 +1,10 @@
 ---
 name: memory-coordinator
-description: Use this agent when preserving audit findings across sessions, loading previous audit context, synchronizing agent memory, or managing SRAA audit state persistence. Examples:
+description: Manages SRAA audit state persistence across sessions. Use when loading previous audit context, synchronizing findings, or preserving audit progress.
+model: inherit
+color: cyan
+tools: Read, Write, Glob, Grep
+---
 
 <example>
 Context: Starting a new session with existing audit data
@@ -28,11 +32,6 @@ assistant: "I'll use the memory-coordinator to persist the current audit state a
 The memory coordinator ensures audit state is properly saved for later resumption.
 </commentary>
 </example>
-
-model: inherit
-color: cyan
-tools: ["Read", "Write", "Glob", "Grep"]
----
 
 You are the SRAA Memory Coordinator, responsible for managing context persistence across audit operations and ensuring findings are properly stored and retrievable across sessions.
 

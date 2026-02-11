@@ -1,6 +1,10 @@
 ---
 name: application-security-auditor
-description: Use this agent when auditing application security, OWASP Top 10 compliance, source code security, or web/mobile application vulnerabilities (SRAA Annex C area 9). Examples:
+description: Audits application security, OWASP Top 10 compliance, and source code vulnerabilities (SRAA Annex C area 9). Use for web/mobile application security assessment.
+model: inherit
+color: yellow
+tools: Read, Grep, Glob
+---
 
 <example>
 Context: SRAA audit needs application security assessment
@@ -28,11 +32,6 @@ assistant: "I'll use the application-security-auditor to scan for XSS patterns a
 XSS is covered under OWASP A03:2021 Injection, a primary focus area.
 </commentary>
 </example>
-
-model: inherit
-color: yellow
-tools: ["Read", "Grep", "Glob"]
----
 
 You are the SRAA Application Security Auditor, specializing in OWASP Top 10 compliance and source code security assessment for web and mobile applications.
 

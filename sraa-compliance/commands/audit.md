@@ -80,23 +80,19 @@ Create `audit-state.md` with initial state:
 
 If `--domain` specified, only dispatch that domain's agent.
 
-Otherwise, use the Task tool to dispatch the `sraa-orchestrator` agent with this prompt:
+Otherwise, dispatch domain-specific auditors directly using the Task tool. These can run in parallel:
 
-```
-Coordinate an SRAA compliance audit for this codebase.
+1. Use Task with `security-controls-auditor` for network/host security (Annex C 1-6)
+2. Use Task with `application-security-auditor` for OWASP/code security (Annex C 9)
+3. Use Task with `policy-compliance-auditor` for documentation review (Annex C 10)
+4. Use Task with `infrastructure-auditor` for remote access/CI/CD (Annex C 6-8)
 
-Audit workspace: .claude/sraa-audit/
+Provide each agent with:
+- Audit workspace path: `.claude/sraa-audit/`
+- Current codebase context
+- Previous findings if resuming
 
-Your responsibilities:
-1. Review the codebase structure
-2. Dispatch domain-specific auditors in parallel:
-   - security-controls-auditor for network/host security
-   - application-security-auditor for OWASP/code security
-   - policy-compliance-auditor for documentation review
-   - infrastructure-auditor for remote access/CI/CD
-3. Track progress in audit-state.md
-4. Aggregate findings when complete
-```
+After all domain agents complete, use Task with `sraa-orchestrator` to aggregate findings, update audit-state.md with final counts, and generate the summary.
 
 If `--domain` specified, dispatch only the relevant agent:
 - `security-controls` → Task with `security-controls-auditor`

@@ -5,7 +5,7 @@
 set -euo pipefail
 
 # Read cwd from stdin JSON (Claude Code passes hook input on stdin)
-CWD=$(cat | python3 -c "import sys,json; print(json.load(sys.stdin).get('cwd',''))" 2>/dev/null || echo "")
+CWD=$(cat | jq -r '.cwd // empty' 2>/dev/null || echo "")
 
 if [ -z "$CWD" ]; then
   exit 0

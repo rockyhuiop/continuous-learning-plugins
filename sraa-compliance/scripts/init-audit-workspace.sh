@@ -58,7 +58,7 @@ EOF
 
 # Create empty finding files with headers
 for domain in "security-controls" "application-security" "policy-compliance" "infrastructure"; do
-    DOMAIN_TITLE=$(echo "$domain" | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
+    DOMAIN_TITLE=$(echo "$domain" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1')
     cat > "$AUDIT_DIR/findings/$domain.md" << EOF
 # $DOMAIN_TITLE Findings
 

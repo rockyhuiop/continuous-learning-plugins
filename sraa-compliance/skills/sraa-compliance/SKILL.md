@@ -1,7 +1,6 @@
 ---
 name: SRAA Compliance
-description: This skill should be used when the user asks about "SRAA compliance", "Hong Kong security audit", "S17 baseline policy", "G3 security guidelines", "ISPG-SM01", "security risk assessment Hong Kong", "Annex C audit", or needs to understand SRAA audit requirements for government/NGO compliance.
-version: 1.0.0
+description: SRAA compliance auditing for Hong Kong security standards (S17, G3, ISPG-SM01). Use for government/NGO security risk assessment and audit workflows.
 ---
 
 # SRAA (Security Risk Assessment and Audit) Framework
