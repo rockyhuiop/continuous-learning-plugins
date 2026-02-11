@@ -46,6 +46,27 @@
       ]
     },
     {
+      "name": "learning-retrospective",
+      "version": "0.1.0",
+      "description": "Periodic learning analysis across Obsidian vault, Anki, and git history. Cross-references three data sources to surface topic clusters, retention gaps, connection suggestions, problem signals, and uncaptured work.",
+      "author": {
+        "name": "Rocky Hui",
+        "email": "rockyhui.operation@gmail.com"
+      },
+      "source": "./learning-retrospective",
+      "category": "productivity",
+      "keywords": [
+        "learning",
+        "retrospective",
+        "analysis",
+        "obsidian",
+        "anki",
+        "spaced-repetition",
+        "knowledge-management",
+        "git-analysis"
+      ]
+    },
+    {
       "name": "sraa-compliance",
       "version": "1.0.0",
       "description": "SRAA (Security Risk Assessment and Audit) compliance auditing for Hong Kong government/NGO security standards. Features specialized sub-agents with persistent context memory for comprehensive security assessments based on S17, G3, and ISPG-SM01 frameworks.",

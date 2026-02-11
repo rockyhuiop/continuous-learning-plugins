@@ -1,0 +1,9 @@
+{
+  "name": "learning-retrospective",
+  "version": "0.1.0",
+  "description": "Periodic learning analysis across Obsidian vault, Anki, and git history",
+  "author": {
+    "name": "Roc"
+  },
+  "keywords": ["learning", "retrospective", "analysis", "spaced-repetition"]
+}
