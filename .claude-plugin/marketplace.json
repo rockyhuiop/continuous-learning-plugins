@@ -69,6 +69,26 @@
       ]
     },
     {
+      "name": "concept-challenger",
+      "version": "0.1.0",
+      "description": "Test concept application through novel scenarios with English writing feedback. Reads concepts from Obsidian vault, generates domain-rotated scenarios, and evaluates both concept understanding and technical writing quality.",
+      "author": {
+        "name": "Rocky Hui",
+        "email": "rockyhui.operation@gmail.com"
+      },
+      "source": "./concept-challenger",
+      "category": "productivity",
+      "keywords": [
+        "learning",
+        "challenge",
+        "concept-testing",
+        "english-writing",
+        "obsidian",
+        "spaced-repetition",
+        "application-testing"
+      ]
+    },
+    {
       "name": "production-audit",
       "version": "1.0.0",
       "description": "Production-grade software engineering audit plugin. Final gatekeeper before shipping to production — covers code quality, architecture, testing, performance, reliability, operations readiness, and feature-specific best practices via HyDE-powered research. Complements sraa-compliance for non-security engineering concerns.",

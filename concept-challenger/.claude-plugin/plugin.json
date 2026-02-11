@@ -1,0 +1,9 @@
+{
+  "name": "concept-challenger",
+  "version": "0.1.0",
+  "description": "Test concept application through novel scenarios with English writing feedback",
+  "author": {
+    "name": "Roc"
+  },
+  "keywords": ["learning", "challenge", "application", "english", "writing"]
+}
