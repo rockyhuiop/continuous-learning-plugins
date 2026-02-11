@@ -1,6 +1,6 @@
 # Rocky's Plugins
 
-A personal collection of Claude Code plugins for knowledge management, security compliance, and engineering quality.
+A personal collection of Claude Code plugins for continuous learning, security compliance, and engineering quality.
 
 ## Installation
 
@@ -13,14 +13,37 @@ claude plugins marketplace add github:rockyhuiop/continuous-learning-plugins
 ### Install plugins
 
 ```bash
-# Install individual plugins
+# Learning system (install all four for the full loop)
 claude plugins install learning-vault@continuous-learning-plugins
 claude plugins install anki-flashcards@continuous-learning-plugins
+claude plugins install learning-retrospective@continuous-learning-plugins
+claude plugins install concept-challenger@continuous-learning-plugins
+
+# Audit tools
 claude plugins install sraa-compliance@continuous-learning-plugins
 claude plugins install production-audit@continuous-learning-plugins
 ```
 
-## Available Plugins
+## The Learning System
+
+Four plugins form an integrated learning loop for developers who learn by building:
+
+```
+found problem → discuss → implement → capture by judgment
+                                        ├── deep concept → learning-vault
+                                        ├── quick fact   → anki-flashcards
+                                        └── nothing notable → move on
+                                             ↓ (weekly)
+                                        learning-retrospective
+                                        - what did I learn?
+                                        - what's sticking? what's weak?
+                                        - what connects? what did I miss?
+                                             ↓ (surfaces weak areas)
+                                        concept-challenger
+                                        - can I APPLY this concept?
+                                        - English writing feedback
+                                        - gaps feed back into vault/anki
+```
 
 ### learning-vault
 
@@ -33,7 +56,7 @@ claude plugins install production-audit@continuous-learning-plugins
 | `learning-discovery` agent | Suggests patterns and techniques from your work |
 | `zettelkasten-notes` skill | Guidance on writing effective atomic notes |
 
-**Requirements:** Obsidian MCP Server configured in Claude Code
+**Requirements:** Obsidian MCP Server
 
 ```bash
 claude mcp add obsidian --scope user -- npx @mauricio.wolff/mcp-obsidian@latest "/path/to/vault"
@@ -51,6 +74,35 @@ claude mcp add obsidian --scope user -- npx @mauricio.wolff/mcp-obsidian@latest 
 
 **Requirements:** Anki desktop + AnkiConnect add-on + Anki MCP server
 
+### learning-retrospective
+
+**Periodic learning analysis across Obsidian vault, Anki, and git history.**
+
+| Component | Description |
+|-----------|-------------|
+| `/learning-retro:retro` | Generate a learning digest for a time period (7d/14d/30d) |
+| `retro-analyzer` agent | Cross-references vault notes, Anki stats, and git commits |
+| `learning-retro` skill | Digest formatting and cross-source analysis guidance |
+
+Surfaces topic clusters, retention gaps, connection suggestions between vault notes, recurring problem signals from git, and uncaptured work areas. Saves digests to Obsidian as `Retros/YYYY-Www.md`.
+
+**Requirements:** Obsidian MCP Server (required), Anki MCP Server (recommended), Git repository
+
+### concept-challenger
+
+**Test concept application through novel scenarios with English writing feedback.**
+
+| Component | Description |
+|-----------|-------------|
+| `/concept-challenger:challenge` | Challenge yourself on a vault concept (specific, random, or weak areas) |
+| `concept-challenge` skill | Scenario design rubrics, evaluation criteria, language rubric |
+
+Picks a concept from your Obsidian vault, generates a realistic problem in a different domain, and evaluates your response in three sections: concept application rating (Strong/Adequate/Needs Review), English language review with grammar and technical writing feedback, and a revised version of your answer with annotated improvements.
+
+**Requirements:** Obsidian MCP Server (required), Anki MCP Server (optional, for weak-area selection)
+
+## Audit Tools
+
 ### sraa-compliance
 
 **SRAA compliance auditing for Hong Kong security standards (S17, G3, ISPG-SM01).**
@@ -66,7 +118,7 @@ Audits codebases against all 10 SRAA Annex C security domains with persistent fi
 
 ### production-audit
 
-**Production-grade engineering quality audit — the final gate before shipping.**
+**Production-grade engineering quality audit -- the final gate before shipping.**
 
 | Component | Description |
 |-----------|-------------|
@@ -75,11 +127,9 @@ Audits codebases against all 10 SRAA Annex C security domains with persistent fi
 | `/production-audit:status` | Check current audit progress |
 | 7 specialized agents | Code architecture, testing, performance, operations, best-practice research, orchestrator, memory |
 
-Covers code quality, architecture, testing, performance, operations readiness, and feature-specific best practices via HyDE-powered research. Complements sraa-compliance for non-security engineering concerns.
+Covers code quality, architecture, testing, performance, operations readiness, and feature-specific best practices. Complements sraa-compliance for non-security engineering concerns.
 
-## Plugin Pairing
-
-The **sraa-compliance** and **production-audit** plugins are designed as complementary audit tools:
+### Audit pairing
 
 | Concern | Plugin |
 |---------|--------|
@@ -94,14 +144,16 @@ Run both before production deployment for comprehensive coverage.
 continuous-learning-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json
-├── README.md
-├── learning-vault/
-├── anki-flashcards/
-├── sraa-compliance/
-└── production-audit/
+├── learning-vault/            ← capture deep concepts
+├── anki-flashcards/           ← capture quick facts
+├── learning-retrospective/    ← periodic analysis
+├── concept-challenger/        ← application testing
+├── sraa-compliance/           ← security audit
+├── production-audit/          ← engineering audit
+└── docs/plans/                ← design documents
 ```
 
-Each plugin follows the standard Claude Code plugin layout with `agents/`, `commands/`, `skills/`, and `hooks/` directories.
+Each plugin follows the standard Claude Code plugin layout with `agents/`, `commands/`, and `skills/` directories.
 
 ## License
 
