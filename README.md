@@ -1,4 +1,4 @@
-# Rocky's Plugins
+# Rocky's Continuous Learning and Auditing Plugins
 
 A personal collection of Claude Code plugins for continuous learning, security compliance, and engineering quality.
 
