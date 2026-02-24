@@ -70,12 +70,25 @@ Look for commits with keywords: `fix`, `security`, `sraa`, `vulnerability`, `xss
 
 Cross-reference git commit messages and changed files against the open findings to determine which findings have been addressed by code changes.
 
-### Step 4: Classify Findings
+### Step 4: Classify Findings and Estimate Duration
 
 For each finding across all repos, classify as:
 
 - **Fixed** - Git history shows commits that directly address the finding (code changes to the relevant files with relevant commit messages). Mark with the commit hash and date as evidence.
 - **Open** - No matching remediation commits found. The finding remains unaddressed.
+
+For each finding (both fixed and open), estimate the expected remediation duration using this reference:
+
+| Category | Examples | Typical Duration |
+|----------|----------|-----------------|
+| Config change | CORS tweak, header toggle, env var rename, npm ci | 0.25–0.5h |
+| Single-file code fix | sameSite cookie, escape regex, body limit, trust proxy | 0.5–1h |
+| Multi-file code fix | Auth middleware, sanitize innerHTML, rate limiter | 1–3h |
+| Feature / migration | Build pipeline, SSO refactor, token exchange, Redis | 3–8h |
+| Policy / documentation | SECURITY.md, privacy policy, IRP, data classification | 2–12h |
+| Infrastructure overhaul | Secret rotation + BFG, IAM roles, CD pipeline | 2–4h |
+
+Adjust based on the specific finding's scope (files affected, dependencies, testing needs). Use compact format: `0.25h`, `0.5h`, `1h`, `2h`, `4h`, `8h`, `12h`.
 
 ### Step 5: Generate Consolidated Summary
 
@@ -89,23 +102,23 @@ Period: [since_date] to [today]
 
 FIXED ITEMS ([count])
 ─────────────────────
-[repo-name] [ID] [Severity] - [Title] (fixed [date])
-[repo-name] [ID] [Severity] - [Title] (fixed [date])
+[repo-name] [ID] [Severity] [Duration] - [Title] (fixed [date])
+[repo-name] [ID] [Severity] [Duration] - [Title] (fixed [date])
 ...
 
 OPEN ITEMS ([count])
 ────────────────────
-[repo-name] [ID] [Severity] - [Title]
-[repo-name] [ID] [Severity] - [Title]
+[repo-name] [ID] [Severity] [Duration] - [Title]
+[repo-name] [ID] [Severity] [Duration] - [Title]
 ...
 
 Summary by Repository
 ─────────────────────
-| Repository | Fixed | Open | Critical | High | Medium | Low |
-|------------|-------|------|----------|------|--------|-----|
-| repo-1     | 5     | 12   | 1        | 3    | 5      | 3   |
-| repo-2     | 0     | 8    | 2        | 2    | 3      | 1   |
-| Total      | 5     | 20   | 3        | 5    | 8      | 4   |
+| Repository | Fixed | Open | Critical | High | Medium | Low | Est. Duration |
+|------------|-------|------|----------|------|--------|-----|---------------|
+| repo-1     | 5     | 12   | 1        | 3    | 5      | 3   | 48h (~6d)     |
+| repo-2     | 0     | 8    | 2        | 2    | 3      | 1   | 24h (~3d)     |
+| Total      | 5     | 20   | 3        | 5    | 8      | 4   | 72h (~9d)     |
 ```
 
 ### Step 6: Export to XLSX (if --xlsx flag present)
@@ -128,6 +141,7 @@ If `--xlsx` flag is provided:
              "title": "...",
              "evidence": "...",
              "recommendation": "...",
+             "duration": "2h",
              "fixed_date": "YYYY-MM-DD",
              "fixed_commit": "abc1234"
            }
@@ -139,7 +153,8 @@ If `--xlsx` flag is provided:
              "domain": "Application Security",
              "title": "...",
              "evidence": "...",
-             "recommendation": "..."
+             "recommendation": "...",
+             "duration": "4h"
            }
          ]
        }

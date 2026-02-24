@@ -36,7 +36,9 @@ TITLE_FONT = Font(name="Calibri", bold=True, size=14, color="1F3864")
 SUBTITLE_FONT = Font(name="Calibri", bold=True, size=12, color="2F5496")
 SECTION_FONT = Font(name="Calibri", bold=True, size=11, color="2F5496")
 NORMAL_FONT = Font(name="Calibri", size=10)
+BOLD_FONT = Font(name="Calibri", bold=True, size=11)
 WRAP_ALIGN = Alignment(wrap_text=True, vertical="top")
+CENTER_ALIGN = Alignment(horizontal="center", vertical="top")
 THIN_BORDER = Border(
     left=Side(style="thin", color="D6DCE4"),
     right=Side(style="thin", color="D6DCE4"),
@@ -61,6 +63,7 @@ SEVERITY_FONTS = {
 }
 
 EVEN_ROW_FILL = PatternFill(start_color="F2F2F2", end_color="F2F2F2", fill_type="solid")
+TOTALS_FILL = PatternFill(start_color="D6DCE4", end_color="D6DCE4", fill_type="solid")
 
 
 # ── Helper Functions ───────────────────────────────────────────────────────
@@ -76,9 +79,10 @@ def apply_header_row(ws, row, headers):
 
 
 def write_finding_row(ws, row, finding, is_fixed=False, is_even=False):
-    """Write a single finding row with severity coloring."""
+    """Write a single finding row with severity coloring and duration."""
     severity = finding.get("severity", "Medium")
     status = "Fixed" if is_fixed else "Open"
+    duration = finding.get("duration", "")
 
     values = [
         finding.get("id", ""),
@@ -87,6 +91,7 @@ def write_finding_row(ws, row, finding, is_fixed=False, is_even=False):
         finding.get("title", ""),
         finding.get("evidence", ""),
         finding.get("recommendation", ""),
+        duration,
         status,
     ]
 
@@ -111,6 +116,10 @@ def write_finding_row(ws, row, finding, is_fixed=False, is_even=False):
         sev_cell.font = SEVERITY_FONTS[sev_key]
         sev_cell.alignment = Alignment(horizontal="center", vertical="top")
 
+    # Center-align duration cell
+    dur_cell = ws.cell(row=row, column=7)
+    dur_cell.alignment = CENTER_ALIGN
+
 
 def set_column_widths(ws, widths):
     """Set column widths by index."""
@@ -128,6 +137,30 @@ def count_by_severity(findings):
     return counts
 
 
+def sum_hours(findings):
+    """Sum duration hours from a list of findings."""
+    total = 0.0
+    for f in findings:
+        dur = f.get("duration", "")
+        if not dur:
+            continue
+        if dur.endswith("h"):
+            total += float(dur[:-1])
+        elif dur.endswith("d"):
+            total += float(dur[:-1]) * 8
+    return total
+
+
+def fmt_hours(h):
+    """Format hours as 'Xh (~Yd)' for display."""
+    if h >= 8:
+        d = h / 8
+        return f"{h:.0f}h (~{d:.1f}d)"
+    if h == 0:
+        return "—"
+    return f"{h:.1f}h" if h != int(h) else f"{int(h)}h"
+
+
 # ── Sheet Builders ─────────────────────────────────────────────────────────
 
 def build_summary_sheet(ws, data):
@@ -135,7 +168,7 @@ def build_summary_sheet(ws, data):
     ws.title = "Summary"
 
     # Title
-    ws.merge_cells("A1:I1")
+    ws.merge_cells("A1:J1")
     title_cell = ws.cell(row=1, column=1, value="SRAA Compliance Audit — Cross-Repo Progress Report")
     title_cell.font = TITLE_FONT
     title_cell.alignment = Alignment(horizontal="center")
@@ -149,13 +182,14 @@ def build_summary_sheet(ws, data):
 
     # Summary table header
     row = 6
-    headers = ["Repository", "Audit Date", "Fixed", "Open", "Critical", "High", "Medium", "Low", "Total"]
+    headers = ["Repository", "Audit Date", "Fixed", "Open", "Critical", "High", "Medium", "Low", "Total", "Est. Duration"]
     apply_header_row(ws, row, headers)
 
     row = 7
     grand_fixed = 0
     grand_open = 0
     grand_counts = {"Critical": 0, "High": 0, "Medium": 0, "Low": 0}
+    grand_hours = 0.0
 
     repos = data.get("repos", {})
     for repo_name in sorted(repos.keys()):
@@ -166,6 +200,7 @@ def build_summary_sheet(ws, data):
         fixed_count = len(fixed)
         open_count = len(open_items)
         open_by_sev = count_by_severity(open_items)
+        open_hrs = sum_hours(open_items)
 
         values = [
             repo_name,
@@ -177,6 +212,7 @@ def build_summary_sheet(ws, data):
             open_by_sev["Medium"],
             open_by_sev["Low"],
             fixed_count + open_count,
+            fmt_hours(open_hrs),
         ]
 
         is_even = (row - 7) % 2 == 1
@@ -198,6 +234,7 @@ def build_summary_sheet(ws, data):
 
         grand_fixed += fixed_count
         grand_open += open_count
+        grand_hours += open_hrs
         for sev in grand_counts:
             grand_counts[sev] += open_by_sev[sev]
 
@@ -214,26 +251,27 @@ def build_summary_sheet(ws, data):
         grand_counts["Medium"],
         grand_counts["Low"],
         grand_fixed + grand_open,
+        fmt_hours(grand_hours),
     ]
     for col_idx, val in enumerate(total_values, 1):
         cell = ws.cell(row=row, column=col_idx, value=val)
-        cell.font = Font(name="Calibri", bold=True, size=11)
+        cell.font = BOLD_FONT
         cell.alignment = Alignment(horizontal="center" if col_idx > 1 else "left", vertical="top")
         cell.border = THIN_BORDER
-        cell.fill = PatternFill(start_color="D6DCE4", end_color="D6DCE4", fill_type="solid")
+        cell.fill = TOTALS_FILL
 
-    set_column_widths(ws, [30, 14, 8, 8, 10, 8, 10, 8, 8])
+    set_column_widths(ws, [30, 14, 8, 8, 10, 8, 10, 8, 8, 16])
 
 
 def build_all_fixed_sheet(ws, data):
     """Build a sheet listing all fixed items across repos."""
     ws.title = "All Fixed Items"
 
-    ws.merge_cells("A1:I1")
+    ws.merge_cells("A1:J1")
     title_cell = ws.cell(row=1, column=1, value="All Remediated Findings")
     title_cell.font = SUBTITLE_FONT
 
-    headers = ["Repo", "ID", "Severity", "Domain", "Title", "Evidence", "Recommendation", "Fixed Date", "Commit"]
+    headers = ["Repo", "ID", "Severity", "Domain", "Title", "Evidence", "Recommendation", "Duration", "Fixed Date", "Commit"]
     apply_header_row(ws, 3, headers)
 
     row = 4
@@ -250,6 +288,7 @@ def build_all_fixed_sheet(ws, data):
                 finding.get("title", ""),
                 finding.get("evidence", ""),
                 finding.get("recommendation", ""),
+                finding.get("duration", ""),
                 finding.get("fixed_date", ""),
                 finding.get("fixed_commit", "")[:8] if finding.get("fixed_commit") else "",
             ]
@@ -262,18 +301,20 @@ def build_all_fixed_sheet(ws, data):
                     cell.fill = EVEN_ROW_FILL
 
             # Severity cell coloring
-            sev = finding.get("severity", "Medium")
             sev_cell = ws.cell(row=row, column=3)
             sev_cell.fill = SEVERITY_FILLS.get("Fixed", SEVERITY_FILLS["Medium"])
             sev_cell.font = SEVERITY_FONTS.get("Fixed", SEVERITY_FONTS["Medium"])
             sev_cell.alignment = Alignment(horizontal="center", vertical="top")
+
+            # Center duration
+            ws.cell(row=row, column=8).alignment = CENTER_ALIGN
 
             row += 1
 
     if row == 4:
         ws.cell(row=4, column=1, value="No fixed items found.").font = NORMAL_FONT
 
-    set_column_widths(ws, [22, 10, 10, 22, 40, 40, 40, 12, 10])
+    set_column_widths(ws, [22, 10, 10, 22, 40, 40, 40, 10, 12, 10])
 
 
 def build_repo_sheet(ws, repo_name, repo_data):
@@ -281,7 +322,8 @@ def build_repo_sheet(ws, repo_name, repo_data):
     ws.title = repo_name[:31]  # Excel sheet name max 31 chars
 
     # Title
-    ws.merge_cells("A1:G1")
+    last_col = "H"
+    ws.merge_cells(f"A1:{last_col}1")
     title_cell = ws.cell(row=1, column=1, value=f"SRAA Findings — {repo_name}")
     title_cell.font = SUBTITLE_FONT
 
@@ -297,17 +339,23 @@ def build_repo_sheet(ws, repo_name, repo_data):
     fixed = repo_data.get("fixed", [])
     open_items = repo_data.get("open", [])
 
-    row = 4
+    # Duration subtitle
+    open_hrs = sum_hours(open_items)
+    ws.cell(row=3, column=1, value=f"Estimated duration for open items: {fmt_hours(open_hrs)}").font = Font(
+        name="Calibri", size=10, italic=True, color="616161"
+    )
+
+    row = 5
 
     # ── Fixed Items Section ──
     if fixed:
-        ws.merge_cells(f"A{row}:I{row}")
+        ws.merge_cells(f"A{row}:J{row}")
         section_cell = ws.cell(row=row, column=1, value=f"FIXED ITEMS ({len(fixed)})")
         section_cell.font = SECTION_FONT
         section_cell.fill = PatternFill(start_color="D6E4F0", end_color="D6E4F0", fill_type="solid")
         row += 1
 
-        headers = ["ID", "Severity", "Domain", "Title", "Evidence", "Recommendation", "Status", "Fixed Date", "Commit"]
+        headers = ["ID", "Severity", "Domain", "Title", "Evidence", "Recommendation", "Duration", "Status", "Fixed Date", "Commit"]
         apply_header_row(ws, row, headers)
         row += 1
 
@@ -318,13 +366,13 @@ def build_repo_sheet(ws, repo_name, repo_data):
         row += 1  # Spacer
 
     # ── Open Items Section ──
-    ws.merge_cells(f"A{row}:I{row}")
+    ws.merge_cells(f"A{row}:{last_col}{row}")
     section_cell = ws.cell(row=row, column=1, value=f"OPEN ITEMS ({len(open_items)})")
     section_cell.font = SECTION_FONT
     section_cell.fill = PatternFill(start_color="FCE4D6", end_color="FCE4D6", fill_type="solid")
     row += 1
 
-    headers = ["ID", "Severity", "Domain", "Title", "Evidence", "Recommendation", "Status"]
+    headers = ["ID", "Severity", "Domain", "Title", "Evidence", "Recommendation", "Duration", "Status"]
     apply_header_row(ws, row, headers)
     row += 1
 
@@ -339,7 +387,7 @@ def build_repo_sheet(ws, repo_name, repo_data):
     else:
         ws.cell(row=row, column=1, value="No open items.").font = NORMAL_FONT
 
-    set_column_widths(ws, [10, 10, 22, 40, 40, 40, 10, 12, 10])
+    set_column_widths(ws, [10, 10, 22, 40, 40, 40, 10, 10, 12, 10])
 
 
 # ── Main ───────────────────────────────────────────────────────────────────

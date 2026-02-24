@@ -83,6 +83,7 @@ For each finding, record:
   "description": "<full description>",
   "evidence": "<evidence text>",
   "recommendation": "<recommendation text>",
+  "duration": "<estimated duration, e.g. 2h>",
   "status": "<Open|Fixed>"
 }
 ```
@@ -121,6 +122,21 @@ For each open finding:
 
 Findings already marked with `**Status:** Fixed` or `**Status:** Remediated` in the audit report should be classified as Fixed regardless of git history.
 
+### Phase 4b: Estimate Duration
+
+For every finding (both fixed and open), estimate the remediation duration. Use this reference:
+
+| Category | Examples | Duration |
+|----------|----------|----------|
+| Config change | CORS tweak, header toggle, env var, npm ci | 0.25–0.5h |
+| Single-file code fix | sameSite cookie, escape regex, body limit | 0.5–1h |
+| Multi-file code fix | Auth middleware, sanitize innerHTML, rate limiter | 1–3h |
+| Feature / migration | Build pipeline, SSO refactor, token exchange, Redis | 3–8h |
+| Policy / documentation | SECURITY.md, privacy policy, IRP, data classification | 2–12h |
+| Infrastructure overhaul | Secret rotation + BFG, IAM roles, CD pipeline | 2–4h |
+
+Adjust based on the finding's scope (number of files, dependencies, testing). Use compact format: `0.25h`, `0.5h`, `1h`, `2h`, `4h`, `8h`, `12h`.
+
 ### Phase 5: Generate Output
 
 #### Text Output
@@ -152,6 +168,7 @@ If XLSX export is requested, write structured JSON to `/tmp/sraa-progress-data.j
           "title": "Brief title",
           "evidence": "Evidence text",
           "recommendation": "Recommendation text",
+          "duration": "2h",
           "fixed_date": "2026-02-06",
           "fixed_commit": "abc1234"
         }
@@ -163,7 +180,8 @@ If XLSX export is requested, write structured JSON to `/tmp/sraa-progress-data.j
           "domain": "Application Security",
           "title": "Brief title",
           "evidence": "Evidence text",
-          "recommendation": "Recommendation text"
+          "recommendation": "Recommendation text",
+          "duration": "4h"
         }
       ]
     }

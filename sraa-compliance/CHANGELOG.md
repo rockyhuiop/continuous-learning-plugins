@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.1] - 2026-02-24
+
+### Added
+- Duration estimation for each finding (fixed and open) in progress reports
+- `Duration` column in XLSX export (per-repo sheets, all-fixed sheet)
+- `Est. Duration` column in summary sheet with per-repo and grand totals
+- Duration estimation reference table in cross-repo-reviewer agent and progress command
+- `duration` field in JSON intermediate format for XLSX generation
+- `sum_hours()` and `fmt_hours()` helpers in XLSX generator script
+
 ## [1.1.0] - 2026-02-24
 
 ### Added

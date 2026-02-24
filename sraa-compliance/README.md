@@ -33,7 +33,7 @@ A Claude Code plugin for auditing codebases against Hong Kong's **SRAA (Security
 **`/sraa:progress`**
 - `repo_paths...` - Space-separated paths to repositories (uses session working directories if omitted)
 - `--since <date>` - Check git history since date (default: each repo's audit date)
-- `--xlsx` - Export to Excel workbook (one sheet per repo + summary)
+- `--xlsx` - Export to Excel workbook (one sheet per repo + summary + duration estimates)
 - `--output <path>` - Custom XLSX output path
 
 ## Agents
