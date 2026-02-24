@@ -9,6 +9,7 @@ A Claude Code plugin for auditing codebases against Hong Kong's **SRAA (Security
 - **Persistent Context Memory**: Findings preserved across sessions in local markdown
 - **Incremental Audits**: Resume where you left off or start fresh
 - **Structured Reports**: Generate executive summaries and detailed findings
+- **Cross-Repo Progress Review**: Analyze remediation progress across multiple repositories with git history analysis and XLSX export
 
 ## Commands
 
@@ -17,6 +18,7 @@ A Claude Code plugin for auditing codebases against Hong Kong's **SRAA (Security
 | `/sraa:audit` | Start or resume an SRAA compliance audit |
 | `/sraa:report` | Generate audit report from findings |
 | `/sraa:status` | Check current audit progress |
+| `/sraa:progress` | Cross-repo progress review with XLSX export |
 
 ### Command Options
 
@@ -28,6 +30,12 @@ A Claude Code plugin for auditing codebases against Hong Kong's **SRAA (Security
 - `--format <md|html>` - Output format (default: md)
 - `--domain <name>` - Generate report for specific domain
 
+**`/sraa:progress`**
+- `repo_paths...` - Space-separated paths to repositories (uses session working directories if omitted)
+- `--since <date>` - Check git history since date (default: each repo's audit date)
+- `--xlsx` - Export to Excel workbook (one sheet per repo + summary)
+- `--output <path>` - Custom XLSX output path
+
 ## Agents
 
 | Agent | Role | Audit Focus |
@@ -38,6 +46,7 @@ A Claude Code plugin for auditing codebases against Hong Kong's **SRAA (Security
 | `application-security-auditor` | App security | OWASP Top 10, React patterns |
 | `policy-compliance-auditor` | Documentation | Policies, procedures, governance |
 | `infrastructure-auditor` | Infrastructure | Remote access, CI/CD, cloud |
+| `cross-repo-reviewer` | Progress analysis | Git history vs findings across repos |
 
 ## Audit Areas (SRAA Annex C)
 
