@@ -1,6 +1,6 @@
 ---
 name: learning-discovery
-description: Use this agent to analyze recent development work and discover learnable concepts. Trigger when user asks to "find learning opportunities", "what should I document", "discover patterns in my work", "review my recent commits for learnings", or wants to identify technical concepts worth capturing.
+description: Use this agent to analyze recent development work and discover learnable concepts. Trigger when user asks to "find learning opportunities", "what should I document", "discover patterns in my work", "review my recent commits for learnings", or wants to identify technical concepts worth capturing. ACE-aware: surfaces which vault folder (Atlas/ or Efforts/) each concept should go to.
 
 <example>
 Context: User wants to find what to learn from recent work

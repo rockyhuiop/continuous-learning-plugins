@@ -1,9 +1,9 @@
 {
   "name": "learning-vault",
-  "version": "1.0.0",
-  "description": "Capture technical learnings to Obsidian vault using Zettelkasten method. Integrates with Obsidian MCP server to create atomic, linked knowledge notes from development work.",
+  "version": "1.1.0",
+  "description": "Capture technical learnings to Obsidian vault using Zettelkasten method and the ACE folder framework (Atlas, Calendar, Efforts). Routes notes to Atlas/ for permanent knowledge or Efforts/ for project-specific material. Supports fast inbox capture via +/ and git-based learning discovery.",
   "author": {
     "name": "Rocky"
   },
-  "keywords": ["obsidian", "learning", "zettelkasten", "knowledge-management", "notes"]
+  "keywords": ["obsidian", "learning", "zettelkasten", "knowledge-management", "notes", "ace", "atlas", "pkm"]
 }

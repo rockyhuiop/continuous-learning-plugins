@@ -1,7 +1,7 @@
 ---
 name: zettelkasten-notes
-description: Use this skill when writing learning notes, creating knowledge documentation, or organizing technical concepts in a connected note system. Applies to questions about "how to write good notes", "atomic notes", "linking notes", "Zettelkasten method", "knowledge management", or when creating notes for the Obsidian vault.
-version: 1.0.0
+description: Use this skill when writing learning notes, creating knowledge documentation, or organizing technical concepts in a connected note system. Applies to questions about "how to write good notes", "atomic notes", "linking notes", "Zettelkasten method", "knowledge management", or when creating notes for the Obsidian vault. Notes live in Atlas/ (permanent knowledge) or Efforts/ (project-specific) per the ACE folder framework.
+version: 1.1.0
 ---
 
 # Zettelkasten Notes for Technical Learning
@@ -45,6 +45,7 @@ Capture YOUR understanding, not textbook definitions:
 ---
 title: Strangler Fig Pattern
 created: 2026-01-28
+ace: atlas
 project: canpanion-backend
 source: implementation
 tags:
@@ -206,7 +207,7 @@ See the `examples/` directory for complete note templates:
 ## Quick Reference
 
 **Creating a new note**:
-1. Use title as filename: `Knowledge/Concept Name.md`
+1. Use title as filename: `Atlas/Concept Name.md` (or `Efforts/{name}/Concept Name.md` if project-specific)
 2. Write one-sentence definition
 3. Add your context and example
 4. Link to 2-5 related concepts

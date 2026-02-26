@@ -1,20 +1,27 @@
 ---
-description: Capture a technical concept or learning to your Obsidian Knowledge vault as a Zettelkasten-style atomic note
+description: Capture a technical concept or learning to your Obsidian vault as a Zettelkasten-style atomic note. Routes to Atlas/ (permanent knowledge) or Efforts/ (project-specific) based on your active efforts.
 argument-hint: Concept name (e.g., "Strangler Fig Pattern")
 allowed-tools: ["Read", "Grep", "Glob", "Bash", "AskUserQuestion", "mcp__obsidian__write_note", "mcp__obsidian__read_note", "mcp__obsidian__search_notes", "mcp__obsidian__list_directory"]
 ---
 
 # Learn Command
 
-Capture a technical concept, pattern, or learning to the user's Obsidian Knowledge vault using Zettelkasten methodology.
+Capture a technical concept, pattern, or learning to the user's Obsidian vault using Zettelkasten methodology. Notes are routed to `Atlas/` (permanent knowledge) or `Efforts/{name}/` (project-specific) based on the ACE folder framework.
 
 ## Process
 
 1. **Parse the concept**: Extract the concept name from `$ARGUMENTS`. If empty, use AskUserQuestion to ask what they want to capture.
 
-2. **Ensure Knowledge folder exists**: Use `mcp__obsidian__list_directory` to check if `Knowledge/` folder exists. If not, inform user it will be created with the first note.
+2. **Check for existing notes**: Use `mcp__obsidian__search_notes` with the concept name. If similar notes exist, use AskUserQuestion to ask if they want to update existing or create new.
 
-3. **Check for existing notes**: Use `mcp__obsidian__search_notes` with the concept name. If similar notes exist, use AskUserQuestion to ask if they want to update existing or create new.
+3. **Resolve destination (ACE routing)**:
+   - Use `mcp__obsidian__list_directory` on `Efforts/` to discover active effort subfolders.
+   - If **no Efforts exist**: destination is `Atlas/`. Skip to step 4.
+   - If **Efforts exist**: use AskUserQuestion:
+     > "Where should this note live?"
+     > Options: **Atlas** (permanent knowledge) | **{Effort 1}** | **{Effort 2}** | ...
+   - Set `destination` to `Atlas/` or `Efforts/{Subfolder Name}/` based on the answer.
+   - Set `ace_field` to `atlas` or `efforts/{subfolder-name-lowercased-hyphenated}`.
 
 4. **Gather context using AskUserQuestion**: You MUST use the AskUserQuestion tool to ask questions interactively. Ask in batches:
 
@@ -29,10 +36,10 @@ Capture a technical concept, pattern, or learning to the user's Obsidian Knowled
 5. **Ask for example**: After the structured questions, ask the user to provide an example from their work (code snippet, implementation detail, etc.)
 
 6. **Create the note**: Use `mcp__obsidian__write_note` to create:
-   - **Path**: `Knowledge/{Title With Spaces}.md` (e.g., `Knowledge/Strangler Fig Pattern.md`)
+   - **Path**: `{destination}/{Title With Spaces}.md` (e.g., `Atlas/Strangler Fig Pattern.md`)
    - **Content**: Use the template below with user's answers
 
-7. **Confirm creation**: Tell the user the note was created and its path
+7. **Confirm creation**: Tell the user the note was created and its full path
 
 ## Note Template
 
@@ -40,6 +47,7 @@ Capture a technical concept, pattern, or learning to the user's Obsidian Knowled
 ---
 title: {Concept Title}
 created: {YYYY-MM-DD}
+ace: {atlas|efforts/effort-name}
 project: {current project name from working directory}
 source: {implementation|reading|discussion|course}
 tags:
@@ -82,28 +90,31 @@ Suggest tags from these categories:
 - **Atomic notes**: Each note covers ONE concept. If user describes multiple, suggest creating separate notes.
 - **Use their words**: Capture the user's understanding, not textbook definitions.
 - **Link liberally**: Encourage links to existing notes and suggest potential future notes.
+- **Quick capture first**: If the user seems to be in a flow state, remind them that `/learn-quick` exists for fast inbox capture without questions.
 
 ## Example Interaction
 
 User: `/learn Strangler Fig Pattern`
 
 1. Check for existing notes about "Strangler Fig"
-2. Use AskUserQuestion:
+2. Scan `Efforts/` — finds: "EKS Certification", "MTR Interview Preparation"
+   Use AskUserQuestion:
+   ```
+   "Where should this note live?"
+   Options: Atlas (permanent knowledge) | EKS Certification | MTR Interview Preparation
+   ```
+   User picks: Atlas → destination = `Atlas/`, ace_field = `atlas`
+3. Use AskUserQuestion:
    ```
    Question 1: "What is the Strangler Fig Pattern in one sentence?"
-   Options: [suggested definitions] + Other
-
    Question 2: "Where did you learn this?"
    Options: Implementation, Reading, Discussion, Course
    ```
-3. Use AskUserQuestion:
+4. Use AskUserQuestion:
    ```
    Question: "What concepts should this link to?"
-   Options: Legacy Migration, Feature Flags, Incremental Refactoring + Other
-
    Question: "Suggested tags: pattern, architecture, migration. Adjust?"
-   Options: Use suggested, Add more, Remove some
    ```
-4. Ask for example code/details
-5. Create note at `Knowledge/Strangler Fig Pattern.md`
-6. Confirm: "Created note: Strangler Fig Pattern"
+5. Ask for example code/details
+6. Create note at `Atlas/Strangler Fig Pattern.md`
+7. Confirm: "Created Atlas/Strangler Fig Pattern.md"

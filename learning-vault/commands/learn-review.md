@@ -1,12 +1,12 @@
 ---
-description: Analyze recent git history to discover learnable concepts, patterns, and terminology worth capturing to your Knowledge vault
+description: Analyze recent git history to discover learnable concepts, patterns, and terminology worth capturing to your Obsidian vault
 argument-hint: Optional number of days to analyze (default: 7)
 allowed-tools: ["Read", "Grep", "Glob", "Bash", "AskUserQuestion", "Task", "mcp__obsidian__search_notes", "mcp__obsidian__list_directory"]
 ---
 
 # Learn Review Command
 
-Analyze the user's recent development work to discover concepts, patterns, and terminology worth capturing as learning notes.
+Analyze the user's recent development work to discover concepts, patterns, and terminology worth capturing as learning notes. ACE-aware: shows which vault folder existing notes live in, and pre-fills routing when git context matches an active Effort.
 
 ## Process
 
@@ -51,12 +51,14 @@ Analyze the user's recent development work to discover concepts, patterns, and t
    - Refactoring commits
    - Performance improvements
 
-4. **Check existing notes**: For each identified concept, search the Knowledge vault to avoid suggesting duplicates:
+4. **Discover active Efforts**: Use `mcp__obsidian__list_directory` on `Efforts/` to get the current effort subfolder names. Store these for routing pre-fill in step 6.
+
+5. **Check existing notes**: For each identified concept, search `Atlas/` and `Efforts/` to avoid suggesting duplicates:
    ```
    mcp__obsidian__search_notes with concept keywords
    ```
 
-5. **Present findings**: Show the user a categorized list of discovered concepts:
+6. **Present findings**: Show the user a categorized list of discovered concepts:
 
    ```
    ## Learning Opportunities from Last 7 Days
@@ -64,23 +66,27 @@ Analyze the user's recent development work to discover concepts, patterns, and t
    ### Architecture Patterns
    - **Strangler Fig Pattern** - Seen in: migration of UserService
      Commits: abc123, def456
+     → Suggested: Atlas
 
    ### New Dependencies
    - **Redis caching** - Added in package.json
      Might be worth documenting: caching strategies
+     → Suggested: Atlas
 
    ### Techniques
    - **Circuit breaker pattern** - Implemented in API client
      File: services/apiClient.js
+     → Suggested: Atlas
 
    ### Already Documented
-   - Event sourcing (note exists: 202601201200-event-sourcing.md)
+   - Event sourcing → Atlas/Event Sourcing.md
+   - STAR Interview Format → Efforts/MTR Interview Preparation/STAR Interview Format.md
    ```
 
-6. **Offer to capture**: Ask user which concepts they want to capture:
+7. **Offer to capture**: Ask user which concepts they want to capture:
    - Provide numbered list
    - User selects one or more
-   - For each selected, trigger the `/learn` workflow
+   - For each selected, trigger the `/learn` workflow with routing pre-filled when git context matches an active Effort (see ACE Routing Pre-fill below)
 
 ## Discovery Heuristics
 
@@ -126,11 +132,21 @@ Found {N} potential learning opportunities from your recent work.
 Which concepts would you like to capture? (Enter numbers, e.g., "1, 3")
 ```
 
+## ACE Routing Pre-fill
+
+When passing a concept to `/learn`, pre-fill the routing step if git context suggests an Effort:
+
+- **Branch name match**: if the current branch name contains words from an Effort subfolder name (case-insensitive), pre-select that Effort and confirm with the user:
+  > "Git context suggests this belongs in **Efforts/MTR Interview Preparation/**. Correct?"
+  > Options: Yes | No, put in Atlas | No, choose different Effort
+
+- **No clear match**: pass to `/learn` with routing question unanswered — the user decides normally.
+
 ## Integration with /learn
 
 When user selects concepts to capture:
 1. For each selected concept, gather the relevant context from git
-2. Pre-fill as much as possible (project, source=implementation, example from actual code)
+2. Pre-fill as much as possible (project, source=implementation, example from actual code, ACE routing if inferrable)
 3. Ask only the essential questions (definition, related concepts)
 4. Create notes efficiently
 
@@ -149,17 +165,21 @@ Found 4 potential learning opportunities from your recent work.
 1. **Strangler Fig Pattern** [pattern, architecture, migration]
    - Evidence: Created /adapters directory, gradual service migration in commits
    - Why: Core pattern for your legacy modernization work
+   - → Suggested: Atlas
 
 2. **Circuit Breaker** [pattern, resilience, api]
    - Evidence: New resilience.js with timeout/retry logic
    - Why: Production reliability pattern worth documenting
+   - → Suggested: Atlas
 
 3. **Server-Sent Events (SSE)** [technique, api, streaming]
    - Evidence: Multiple endpoints now use SSE for AI streaming
    - Why: Key technique for real-time features
+   - → Suggested: Atlas
 
 ## Already in Your Vault
-- Event Sourcing: 202601151030-event-sourcing.md
+- Event Sourcing → Atlas/Event Sourcing.md
+- STAR Interview Format → Efforts/MTR Interview Preparation/STAR Interview Format.md
 
 ## Lower Priority
 - JWT refresh token flow (routine auth update)
