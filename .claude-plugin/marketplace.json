@@ -132,8 +132,8 @@
     },
     {
       "name": "doc-wiki",
-      "version": "1.0.0",
-      "description": "Analyze a codebase, extract features, design a Confluence wiki page tree, generate an implementation plan, and orchestrate documentation writing and publishing. Integrates with atlassian MCP and code-documentation plugins.",
+      "version": "1.1.0",
+      "description": "Analyze a codebase, extract features, design a Confluence wiki page tree, generate an implementation plan, and orchestrate documentation writing and publishing. Includes incremental update command for syncing docs after codebase changes. Integrates with atlassian MCP and code-documentation plugins.",
       "author": {
         "name": "Rocky Hui",
         "email": "rockyhui.operation@gmail.com"
