@@ -1,9 +1,10 @@
 {
   "name": "doc-wiki",
-  "version": "1.0.0",
-  "description": "Analyze a codebase, extract features, design a Confluence wiki page tree, generate an implementation plan, and orchestrate documentation writing and publishing.",
+  "version": "1.1.0",
+  "description": "Analyze a codebase, extract features, design a Confluence wiki page tree, generate an implementation plan, and orchestrate documentation writing and publishing. Includes incremental update command for syncing docs after codebase changes.",
   "author": {
-    "name": "roc_op"
+    "name": "Rocky Hui",
+    "email": "rockyhui.operation@gmail.com"
   },
-  "keywords": ["documentation", "confluence", "wiki", "codebase-analysis"]
+  "keywords": ["documentation", "confluence", "wiki", "codebase-analysis", "technical-writing", "atlassian", "docs-generation"]
 }
