@@ -1,0 +1,9 @@
+{
+  "name": "doc-wiki",
+  "version": "1.0.0",
+  "description": "Analyze a codebase, extract features, design a Confluence wiki page tree, generate an implementation plan, and orchestrate documentation writing and publishing.",
+  "author": {
+    "name": "roc_op"
+  },
+  "keywords": ["documentation", "confluence", "wiki", "codebase-analysis"]
+}
