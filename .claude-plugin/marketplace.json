@@ -149,6 +149,29 @@
         "atlassian",
         "docs-generation"
       ]
+    },
+    {
+      "name": "cloud-infra-estimator",
+      "version": "0.1.0",
+      "description": "Analyzes a software system across multiple repos to estimate Azure cloud infrastructure requirements for a target scale (concurrent users). Scans Dockerfiles, k8s manifests, and IaC files to build a service topology, models load, sizes Azure SKUs across three tiers (min/recommended/peak), and outputs a formatted .xlsx report with cost estimates.",
+      "author": {
+        "name": "Rocky Hui",
+        "email": "rockyhui.operation@gmail.com"
+      },
+      "source": "./cloud-infra-estimator",
+      "category": "devops",
+      "keywords": [
+        "azure",
+        "cloud",
+        "infrastructure",
+        "estimation",
+        "scaling",
+        "concurrent-users",
+        "xlsx",
+        "devops",
+        "capacity-planning",
+        "cost-estimation"
+      ]
     }
   ]
 }

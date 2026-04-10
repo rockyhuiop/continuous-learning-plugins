@@ -1,0 +1,10 @@
+{
+  "name": "cloud-infra-estimator",
+  "version": "0.1.0",
+  "description": "Analyzes a software system across multiple repos to estimate Azure cloud infrastructure requirements for a target scale (concurrent users), outputting a formatted .xlsx report.",
+  "author": {
+    "name": "Hui Rocky",
+    "email": ""
+  },
+  "keywords": ["azure", "cloud", "infrastructure", "estimation", "scaling", "xlsx", "devops"]
+}
