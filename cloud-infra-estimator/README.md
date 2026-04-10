@@ -15,9 +15,11 @@ Analyzes a software system across one or more repositories to estimate the Azure
 
 Install via the Claude Code plugin marketplace or copy this directory to your plugins folder.
 
-**Python dependency** (for report generation):
+**Python dependency** (for report generation): requires `uv` (recommended) or Python 3.8+ with `openpyxl`.
+
+Install `uv` if not already present:
 ```bash
-pip install openpyxl
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 ## Usage
@@ -70,6 +72,6 @@ The plugin generates `./infra-estimate.xlsx` (or a path you specify) with these 
 
 ## Requirements
 
-- Python 3.8+
-- `openpyxl` (`pip install openpyxl`)
+- [`uv`](https://docs.astral.sh/uv/) (recommended) — no manual package install needed
+- Or: Python 3.8+ with `pip install openpyxl`
 - Read access to target repositories

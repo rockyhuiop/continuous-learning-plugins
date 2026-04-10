@@ -8,17 +8,21 @@ version: 0.1.0
 
 Produce a formatted, easy-to-read `.xlsx` infrastructure estimation report using the `generate_report.py` script bundled with this plugin.
 
-## Prerequisites
+## Running the Script
+
+Use `uv run` — no manual package installation needed:
+
+```bash
+uv run --with openpyxl \
+  python3 $CLAUDE_PLUGIN_ROOT/scripts/generate_report.py \
+  --data <path-to-data.json> \
+  --output <output-path.xlsx>
+```
+
+`uv` creates an ephemeral isolated environment on the fly. If `uv` is not available, fall back to:
 
 ```bash
 pip install openpyxl
-```
-
-Python 3.8+ required.
-
-## Running the Script
-
-```bash
 python3 $CLAUDE_PLUGIN_ROOT/scripts/generate_report.py \
   --data <path-to-data.json> \
   --output <output-path.xlsx>
@@ -48,7 +52,7 @@ The report uses a minimal, professional aesthetic:
 
 ## Troubleshooting
 
-- **`ModuleNotFoundError: openpyxl`** — run `pip install openpyxl`
+- **`ModuleNotFoundError: openpyxl`** — use `uv run --with openpyxl python3 ...` or run `pip install openpyxl`
 - **Permission denied on output path** — check write permissions or use `./` prefix
 - **Empty sheets** — verify JSON data file matches schema in `references/report-schema.md`
 

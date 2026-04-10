@@ -111,7 +111,8 @@ Sum across all services for total monthly estimate per tier.
 Run the report generation script:
 
 ```bash
-python3 $CLAUDE_PLUGIN_ROOT/scripts/generate_report.py \
+uv run --with openpyxl \
+  python3 $CLAUDE_PLUGIN_ROOT/scripts/generate_report.py \
   --data /tmp/infra-estimate-data.json \
   --output ./infra-estimate.xlsx
 ```
