@@ -172,6 +172,27 @@
         "capacity-planning",
         "cost-estimation"
       ]
+    },
+    {
+      "name": "enterprise-deep-analysis",
+      "version": "0.1.0",
+      "description": "Wall Street-grade enterprise strategy and stock price deep analysis framework. Produces structured 5-chapter reports with competitive moat assessment, macro environment context, valuation modeling, catalyst calendar, risk matrix, and three-scenario price targets in Traditional Chinese.",
+      "author": {
+        "name": "Rocky Hui",
+        "email": "rockyhui.operation@gmail.com"
+      },
+      "source": "./enterprise-deep-analysis",
+      "category": "productivity",
+      "keywords": [
+        "stock-analysis",
+        "valuation",
+        "enterprise-strategy",
+        "competitive-moat",
+        "price-target",
+        "finance",
+        "traditional-chinese",
+        "investment"
+      ]
     }
   ]
 }
