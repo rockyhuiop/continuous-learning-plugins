@@ -1,0 +1,10 @@
+{
+  "name": "enterprise-deep-analysis",
+  "version": "0.1.0",
+  "description": "Wall Street-grade enterprise strategy and stock price deep analysis framework. Produces structured 5-chapter reports with competitive moat assessment, valuation modeling, and three-scenario price targets in Traditional Chinese.",
+  "author": {
+    "name": "Hui Rocky",
+    "email": ""
+  },
+  "keywords": ["stock", "analysis", "valuation", "strategy", "moat", "finance", "enterprise"]
+}
